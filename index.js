@@ -5,7 +5,8 @@ require('dotenv').config();
 const app = express();
 app.use(express.json());
 
-const periodMilliseconds = Number(process.env.PERIOD_SECONDS);
+const port = Number(process.env.SERVER_PORT || 8000);
+const periodMilliseconds = Number(process.env.PERIOD_SECONDS || 5) * 1000;
 const gameServers = {};
 const healthTimes = {};
 
@@ -48,14 +49,14 @@ app.post('/connect', (req, res) => {
     {
         // NOTE: Not sure there is a form validation library or not.
         const gameServer = {
-            id = uuid.v4(),
-            address = value.address,
-            port = value.port,
-            title = value.title,
-            description = value.description,
-            map = value.map,
-            currentPlayer = value.currentPlayer,
-            maxPlayer = value.maxPlayer,
+            id: uuid.v4(),
+            address: value.address,
+            port: value.port,
+            title: value.title,
+            description: value.description,
+            map: value.map,
+            currentPlayer: value.currentPlayer,
+            maxPlayer: value.maxPlayer,
         };
         gameServers[gameServer.id] = gameServer;
         const time = Date.now();
@@ -114,14 +115,14 @@ app.put('/update', (req, res) => {
         if (id !== undefined && id in gameServers)
         {
             const gameServer = {
-                id = value.id,
-                address = value.address,
-                port = value.port,
-                title = value.title,
-                description = value.description,
-                map = value.map,
-                currentPlayer = value.currentPlayer,
-                maxPlayer = value.maxPlayer,
+                id: value.id,
+                address: value.address,
+                port: value.port,
+                title: value.title,
+                description: value.description,
+                map: value.map,
+                currentPlayer: value.currentPlayer,
+                maxPlayer: value.maxPlayer,
             };
             gameServers[id] = gameServer;
             res.status(200).send({
@@ -194,4 +195,4 @@ const HealthHandle = () =>
 };
 setInterval(HealthHandle, 1000);
 
-app.listen(SERVER_PORT, () => console.log(`Simple Server Listing is listening on port ${SERVER_PORT}`));
+app.listen(port, () => console.log(`Simple Server Listing is listening on port ${port}`));
