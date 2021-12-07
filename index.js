@@ -5,7 +5,7 @@ require('dotenv').config();
 const app = express();
 app.use(express.json());
 
-const periodSeconds = Number(process.env.PERIOD_SECONDS);
+const periodMilliseconds = Number(process.env.PERIOD_SECONDS);
 const gameServers = {};
 const healthTimes = {};
 
@@ -48,7 +48,7 @@ app.post('/connect', (req, res) => {
     {
         // NOTE: Not sure there is a form validation library or not.
         const gameServer = {
-            id = uuid.v4.generate(),
+            id = uuid.v4(),
             address = value.address,
             port = value.port,
             title = value.title,
@@ -178,7 +178,7 @@ const HealthHandle = () =>
         const keys = Object.keys(gameServers);
         for (let i = 0; i < keys.length; ++i) {
             let id = keys[i];
-            if (Date.now() - healthTimes[id] >= periodSeconds)
+            if (Date.now() - healthTimes[id] >= periodMilliseconds)
             {
                 // Kick unhealthy (timed out) game servers
                 delete gameServers[id];
