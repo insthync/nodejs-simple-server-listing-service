@@ -12,8 +12,8 @@
     "url": "git+https://github.com/insthync/nodejs-simple-server-listing-service.git"
   },
   "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "author": "Ittipon Teerapruettikulchai",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/insthync/nodejs-simple-server-listing-service/issues"
   },
