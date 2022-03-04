@@ -178,8 +178,9 @@ const HealthHandle = () =>
     {
         const keys = Object.keys(gameServers);
         for (let i = 0; i < keys.length; ++i) {
-            let id = keys[i];
-            if (Date.now() - healthTimes[id] >= periodMilliseconds)
+            const id = keys[i];
+            const timeDiff = Date.now() - healthTimes[id];
+            if (timeDiff >= periodMilliseconds)
             {
                 // Kick unhealthy (timed out) game servers
                 delete gameServers[id];
